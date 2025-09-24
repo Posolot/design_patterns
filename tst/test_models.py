@@ -4,7 +4,7 @@ from src.settings_manager import settings_manager
 
 import unittest
 import json
-
+import pytest
 
 class test_models(unittest.TestCase):
     # Проверка создания основной модели
@@ -79,13 +79,59 @@ class test_models(unittest.TestCase):
         # Подготовка
         file_name = "C:/Users/ilushenka/Desktop/testing.json"#Абсолютный путь
         manager1 = settings_manager(file_name)
-        file_name2 = "../settings.json"#Относительный путь
+        file_name2 = "../settings.json" #Относительный путь
         manager2 = settings_manager(file_name2)
         # Действие
         manager1.load()
         manager2.load()
         assert manager1._data is not None
         assert manager2._data is not None
+
+    def test_wrong_json_data_inn(self):
+        # Подготовка
+        file_name = "../settings.json"  # Относительный путь
+        manager1 = settings_manager(file_name)
+        # Действие
+        manager1.load()
+        manager1.settings.company.inn = "12312312312"  # 11 символов вместо 12
+        # Тесты
+        assert manager1.settings.company.inn == manager1.settings.validate_str(manager1.settings.company.inn, 12, "ИНН")
+
+    def test_wrong_json_data_account(self):
+        file_name = "../settings.json"
+        manager1 = settings_manager(file_name)
+        manager1.load()
+        manager1.settings.company.account = "1231231231"  # 10 символов вместо 11
+        assert manager1.settings.company.account == manager1.settings.validate_str(
+            manager1.settings.company.account, 11, "Счёт"
+        )
+
+    def test_wrong_json_data_bik(self):
+        file_name = "../settings.json"
+        manager1 = settings_manager(file_name)
+        manager1.load()
+        manager1.settings.company.bik = "12312312"  # 8 символов вместо 9
+        assert manager1.settings.company.bik == manager1.settings.validate_str(
+            manager1.settings.company.bik, 9, "БИК"
+        )
+
+    def test_wrong_json_data_ownership(self):
+        file_name = "../settings.json"
+        manager1 = settings_manager(file_name)
+        manager1.load()
+        manager1.settings.company.ownership = "1231"  # 4 символа вместо 5
+        assert manager1.settings.company.ownership == manager1.settings.validate_str(
+            manager1.settings.company.ownership, 5, "Вид собственности"
+        )
+
+    def test_wrong_json_data_corr_account(self):
+        file_name = "../settings.json"
+        manager1 = settings_manager(file_name)
+        manager1.load()
+        manager1.settings.company.corr_account = "1231231231"  # 10 символов вместо 11
+        assert manager1.settings.company.corr_account == manager1.settings.validate_str(
+            manager1.settings.company.corr_account, 11, "Корреспондентский счет"
+        )
 
 
 if __name__ == '__main__':
