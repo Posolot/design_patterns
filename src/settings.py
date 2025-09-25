@@ -16,4 +16,7 @@ class Settings:
             raise ValueError(f"{field} должен содержать ровно {length} символов")
         return value
 
-
+    def validate_number(self, value: int, length: int, field: str) -> int:
+        if len(str(value)) != length:
+            raise ValueError(f"{field} должен содержать ровно {length} символов")
+        return value

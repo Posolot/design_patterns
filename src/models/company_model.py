@@ -3,10 +3,10 @@ import json
 
 class company_model:
     _name: str = ""
-    _inn: str = ""
-    _corr_account: str = ""
-    _bik: str = ""
-    _account: str = ""
+    _inn: int = ""
+    _corr_account: int = ""
+    _bik: int = ""
+    _account: int = ""
     _ownership: str = ""
 
 

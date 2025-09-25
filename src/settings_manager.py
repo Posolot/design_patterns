@@ -54,10 +54,10 @@ class settings_manager:
             raise ValueError("Settings: должен быть словарь 'company'")
         # Валидация данных
         self._settings.company.name = self._settings.validate_str(company_data.get("name"), len(company_data.get("name","")),"Наименование")
-        self._settings.company.inn = self._settings.validate_str(company_data.get("inn"), 12, "ИНН")
-        self._settings.company.account = self._settings.validate_str(company_data.get("account"), 11, "Счёт")
-        self._settings.company.corr_account = self._settings.validate_str(company_data.get("corr_account"), 11, "Корреспондентский счет")
-        self._settings.company.bik = self._settings.validate_str(company_data.get("bik"), 9, "БИК")
+        self._settings.company.inn = self._settings.validate_number(company_data.get("inn"), 12, "ИНН")
+        self._settings.company.account = self._settings.validate_number(company_data.get("account"), 11, "Счёт")
+        self._settings.company.corr_account = self._settings.validate_number(company_data.get("corr_account"), 11, "Корреспондентский счет")
+        self._settings.company.bik = self._settings.validate_number(company_data.get("bik"), 9, "БИК")
         self._settings.company.ownership = self._settings.validate_str(company_data.get("ownership"), 5, "Вид собственности")
 
         return self._settings
