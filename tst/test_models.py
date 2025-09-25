@@ -69,10 +69,10 @@ class test_models(unittest.TestCase):
         assert hasattr(settings_exemplar, 'ownership') is True
 
         assert settings_exemplar.name.strip() != ""
-        assert settings_exemplar.inn.strip() != ""
-        assert settings_exemplar.account.strip != ""
-        assert settings_exemplar.corr_account.strip() != ""
-        assert settings_exemplar.bik.strip() != ""
+        assert len(str(settings_exemplar.inn)) != 0
+        assert len(str(settings_exemplar.account)) != 0
+        assert len(str(settings_exemplar.corr_account)) != 0
+        assert len(str(settings_exemplar.bik)) != 0
         assert settings_exemplar.ownership.strip() != ""
 
     def test_load_file_another_catalog(self):
@@ -93,16 +93,16 @@ class test_models(unittest.TestCase):
         manager1 = settings_manager(file_name)
         # Действие
         manager1.load()
-        manager1.settings.company.inn = "12312312312"  # 11 символов вместо 12
+        manager1.settings.company.inn = 12312312312  # 11 символов вместо 12
         # Тесты
-        assert manager1.settings.company.inn == manager1.settings.validate_str(manager1.settings.company.inn, 12, "ИНН")
+        assert manager1.settings.company.inn == manager1.settings.validate_number(manager1.settings.company.inn, 12, "ИНН")
 
     def test_wrong_json_data_account(self):
         file_name = "../settings.json"
         manager1 = settings_manager(file_name)
         manager1.load()
-        manager1.settings.company.account = "1231231231"  # 10 символов вместо 11
-        assert manager1.settings.company.account == manager1.settings.validate_str(
+        manager1.settings.company.account = 1231231231  # 10 символов вместо 11
+        assert manager1.settings.company.account == manager1.settings.validate_number(
             manager1.settings.company.account, 11, "Счёт"
         )
 
@@ -110,8 +110,8 @@ class test_models(unittest.TestCase):
         file_name = "../settings.json"
         manager1 = settings_manager(file_name)
         manager1.load()
-        manager1.settings.company.bik = "12312312"  # 8 символов вместо 9
-        assert manager1.settings.company.bik == manager1.settings.validate_str(
+        manager1.settings.company.bik = 12312312  # 8 символов вместо 9
+        assert manager1.settings.company.bik == manager1.settings.validate_number(
             manager1.settings.company.bik, 9, "БИК"
         )
 
@@ -128,8 +128,8 @@ class test_models(unittest.TestCase):
         file_name = "../settings.json"
         manager1 = settings_manager(file_name)
         manager1.load()
-        manager1.settings.company.corr_account = "1231231231"  # 10 символов вместо 11
-        assert manager1.settings.company.corr_account == manager1.settings.validate_str(
+        manager1.settings.company.corr_account = 1231231231  # 10 символов вместо 11
+        assert manager1.settings.company.corr_account == manager1.settings.validate_number(
             manager1.settings.company.corr_account, 11, "Корреспондентский счет"
         )
 
