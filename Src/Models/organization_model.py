@@ -1,15 +1,13 @@
-import json
 from Src.Core.validator import validator
 from Src.Core.abstract_model import abstact_model
 
-class company_model(abstact_model):
-    _inn: int = 0
-    _corr_account: int = 0
-    _bik: int = 0
-    _account: int = 0
-    _ownership: str = ""
 
-    # ИНН
+class organization_model(abstact_model):
+    _inn: int = 0
+    _bic: int = 0
+    _account: int = 0
+    _form_ownership = ""
+
     @property
     def inn(self) -> int:
         return self._inn
@@ -19,7 +17,6 @@ class company_model(abstact_model):
         validator.validate(value, int, 12)
         self._inn = value
 
-    # КПП
     @property
     def bic(self) -> int:
         return self._bic
@@ -28,16 +25,6 @@ class company_model(abstact_model):
     def bic(self, value: int):
         validator.validate(value, int, 9)
         self._bic = value
-
-    # Корреспондентский счет
-    @property
-    def corr_account(self) -> int:
-        return self._corr_account
-
-    @corr_account.setter
-    def corr_account(self, value: int):
-        validator.validate(value, int, 11)
-        self._corr_account = value
 
     @property
     def account(self) -> int:
@@ -49,13 +36,9 @@ class company_model(abstact_model):
         self._account = value
 
     @property
-    def ownership(self) -> str:
-        return self._ownership
+    def form_ownership(self) -> str:
+        return self._form_ownership
 
-    @ownership.setter
-    def ownership(self, value: str):
-        validator.validate(value, str, 5)
-        self._ownership = value.strip()
-
-
-
+    @form_ownership.setter
+    def form_ownership(self, value: str):
+        validator.validate(value, str)

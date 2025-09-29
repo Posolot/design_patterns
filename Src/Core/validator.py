@@ -52,5 +52,4 @@ class validator:
 
         if len_ is not None and len(str(value).strip()) > len_:
             raise argument_exception("Некорректная длина аргумента")
-
         return True
