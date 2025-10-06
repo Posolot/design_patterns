@@ -5,9 +5,10 @@ from Src.Models.company_model import company_model
 from Src.settings_manager import settings_manager
 from Src.Models.storage_model import storage_model
 from Src.Core.validator import argument_exception
-from Src.Models.range_model import unit_measure_model
-from Src.Models.group_model import nomenclature_group_model
+from Src.Models.range_model import range_model
+from Src.Models.group_model import group_model
 from Src.Models.nomenclature_model import nomenclature_model
+from Src.Models.receipt_model import receipt_model
 import unittest
 
 
@@ -80,34 +81,34 @@ class test_models(unittest.TestCase):
     # Проверяем вариант создания без коэффициента
     def test_create_base_unit_default(self):
         # Действие
-        result = unit_measure_model("грамм",1)
+        result = range_model("грамм",1)
         # Проверки
-        self.assertEqual(result.coefficient, 1)
+        self.assertEqual(result.value, 1)
         self.assertEqual(result.name, "грамм")
 
     # Проверка создания базовой единицы и единицы с перерасчётом
     def test_create_with_valid_base_unit(self):
         # Подготовка
-        base_unit = unit_measure_model("грамм", 1)
-        new_unit = unit_measure_model("кг", 1000, base_unit)
+        base_unit = range_model("грамм", 1)
+        new_unit = range_model("кг", 1000, base_unit)
         # Проверки
-        self.assertEqual(new_unit.factor, 1000)
+        self.assertEqual(new_unit.value, 1000)
 
     # Проверка получения ошибки при передаче не подходящей по типу базовой единицы
     def test_invalid_base_unit_type(self):
         # Проверки
-        new_unit = unit_measure_model("кг", 1000, "Неверный тип данных")
+        new_unit = range_model("кг", 1000, "Неверный тип данных")
 
     # Проверка на отрицательное значение передаваемое в коэффициент перерасчёта
     def test_negative_coefficient(self):
         #Действие
-        base_unit = unit_measure_model("грамм", -5)
+        base_unit = range_model("грамм", -5)
 
     # Проверка валидных значений передаваемых в класс
     def test_full_name_valid(self):
         # Подготовка
-        self.group = nomenclature_group_model()
-        self.unit = unit_measure_model("шт", 1)
+        self.group = group_model()
+        self.unit = range_model("шт", 1)
         model = nomenclature_model()
         model.full_name = "Товар А"
         # Проверки
@@ -135,6 +136,45 @@ class test_models(unittest.TestCase):
 
         # Проверки
         assert storage1 == storage2
+
+    def test_receipt_model(self):
+        # Подготовка
+        receipt = receipt_model()
+        receipt.name = "ОМЛЕТ С МОЛОКОМ И ЗЕЛЕНЬЮ"
+        receipt.number_of_servings = 3
+        receipt.cooking_length = range_model(_name="мин", _value=10)
+        receipt.ingredients = [
+            nomenclature_model(
+                _group=group_model(_name="Зелень"),
+                _range=range_model(_name="гр", _value=10)
+            ),
+            nomenclature_model(
+                _group=group_model(_name="Сливочное масло"),
+                _range=range_model(_name="гр", _value=20)
+            ),
+            nomenclature_model(
+                _group=group_model(_name="Яйца"),
+                _range=range_model(_name="шт", _value=4)
+            ),
+            nomenclature_model(
+                _group=group_model(_name="Молоко"),
+                _range=range_model(_name="гр", _value=100)
+            )
+        ]
+        receipt.steps = [
+            '''Подготовьте все ингредиенты для омлета.''',
+            ''' Разбейте яйца в миску и слегка взбейте венчиком или вилкой.''',
+            '''Влейте молоко и хорошо перемешайте до однородности.''',
+            '''На сковороде растопите сливочное масло на среднем огне.''',
+            '''Вылейте яично-молочную смесь на сковороду.''',
+            '''Готовьте под крышкой на медленном огне 5–7 минут, пока омлет не схватится.''',
+            '''Посыпьте сверху измельчённой зеленью и подавайте горячим.'''
+        ]
+        assert receipt.name != ""
+        assert receipt.number_of_servings == 3
+        assert receipt.cooking_length.name != ""
+        assert len(receipt.ingredients) > 0
+        assert len(receipt.steps) > 0
 
 
 if __name__ == '__main__':

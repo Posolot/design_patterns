@@ -5,7 +5,6 @@ from Src.Core.validator import validator, argument_exception
 Модель единицы измерения
 """
 
-
 class range_model(entity_model):
     _value: int = 1
     _base: 'range_model' = None
@@ -13,6 +12,12 @@ class range_model(entity_model):
     """
     Значение коэффициента пересчета
     """
+
+    def __init__(self, _name: str = "", _value: int = 1, _base: 'range_model' = None):
+        super().__init__(_name)
+        self.value = _value
+        self.base = _base
+
 
     @property
     def value(self) -> int:
@@ -58,8 +63,9 @@ class range_model(entity_model):
     Универсальный метод - фабричный
     """
 
+
     @staticmethod
-    def create(name: str, base):
+    def create(name: str, base= None):
         validator.validate(name, str)
         inner_base = None
         if not base is None:
@@ -69,3 +75,5 @@ class range_model(entity_model):
         item.name = name
         item.base = inner_base
         return item
+
+

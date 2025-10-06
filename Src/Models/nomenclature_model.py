@@ -6,9 +6,13 @@ from Src.Models.range_model import range_model
 
 class nomenclature_model(entity_model):
     _full_name: str = ""
-    _group: group_model = None
-    _range: range_model = None
+    _group: group_model = group_model()
+    _range: range_model = range_model()
 
+    def __init__(self, _name: str = "", _group: group_model = group_model(), _range: range_model = range_model()):
+        super().__init__(_name)
+        self.group = _group
+        self.range = _range
     """
     Полное имя(255 символов)
     """
