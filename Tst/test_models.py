@@ -5,8 +5,8 @@ from Src.Models.company_model import company_model
 from Src.settings_manager import settings_manager
 from Src.Models.storage_model import storage_model
 from Src.Core.validator import argument_exception
-from Src.Models.unit_measure_model import unit_measure_model
-from Src.Models.nomenclature_group_model import nomenclature_group_model
+from Src.Models.range_model import unit_measure_model
+from Src.Models.group_model import nomenclature_group_model
 from Src.Models.nomenclature_model import nomenclature_model
 import unittest
 

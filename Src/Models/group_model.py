@@ -2,5 +2,5 @@ from Src.Core.validator import validator
 from Src.Core.entity_model import entity_model
 
 
-class warehouse_model(entity_model):
-        pass
+class group_model(entity_model):
+    pass
