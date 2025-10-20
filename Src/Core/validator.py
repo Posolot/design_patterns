@@ -56,6 +56,14 @@ class validator:
             raise argument_exception("Некорректная длина аргумента")
         return True
 
+    @staticmethod
+    def is_list(
+            value: list,
+            field_name: str,
+            strong_check: bool = False,
+    ) -> bool:
+        return validator.validate(value, list, None)
+
     def is_list_of(
             value: list,
             list_: list,

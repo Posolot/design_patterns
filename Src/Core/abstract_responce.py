@@ -4,15 +4,15 @@ from Src.Core.responce_format import response_formats
 
 # Абстрактный класс для фолрмирования ответов
 class abstract_response(ABC):
-
-    @abstractmethod
-    def __init__(self):
-        super().__init__()
-
-    """Сформировать нужный ответ"""
     @abstractmethod
     def build(self, data: list, format: str) -> str:
-        validator.validate(format, response_formats, "format")
-        validator.is_list_of_same(data, "list of models")
+        """
+        data: список моделей
+        format: строка, одна из допустимых форматов (json, csv, markdown, xml)
+        """
+        validator.validate(format, str)
+        if format.lower() not in [f.lower() for f in response_formats.answers_types()]:
+            raise ValueError(f"Unsupported format: {format}")
 
-        return ""
+        # Проверяем, что data — список однотипных объектов
+        validator.is_list_of_same(data, "list of models")
