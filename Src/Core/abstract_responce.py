@@ -1,17 +1,18 @@
-import abc
+from abc import ABC, abstractmethod
 from Src.Core.validator import validator, operation_exception
-
+from Src.Core.responce_format import response_formats
 
 # Абстрактный класс для фолрмирования ответов
-class abstract_response(abc.ABC):
+class abstract_response(ABC):
 
-    # Сформировать нужный ответ
-    @abc.abstractmethod
-    def build(self, format: str, data: list) -> str:
-        validator.validate(format, str)
-        validator.validate(data, list)
+    @abstractmethod
+    def __init__(self):
+        super().__init__()
 
-        if len(data) == 0:
-            raise operation_exception("Нет данных!")
+    """Сформировать нужный ответ"""
+    @abstractmethod
+    def build(self, data: list, format: str) -> str:
+        validator.validate(format, response_formats, "format")
+        validator.is_list_of_same(data, "list of models")
 
         return ""

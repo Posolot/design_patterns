@@ -1,17 +1,45 @@
+from typing import Union
+from Src.Core.validator import validator
+from Src.Core.responce_format import response_formats
 from Src.Core.abstract_responce import abstract_response
 from Src.Logics.responce_csv import response_scv
-from Src.Core.validator import operation_exception
+from Src.Logics.responce_xml import responce_xml
+from Src.Logics.responce_json import responce_json
+from Src.Logics.responce_markdown import responce_markdown
+from Src.settings_manager import settings_manager
 
-
-class factory_entities:
-    __match = {
-        "csv": response_scv
+class facrtory_entities:
+    # Сопоставление текстовых форматов и Enum-форматов
+    __match_formats = {
+        "csv": response_formats.csv(),
+        "markdown": response_formats.markdown(),
+        "md": response_formats.markdown(),
+        "json": response_formats.json(),
+        "xml": response_formats.xml(),
     }
 
-    # Получить нужный тип
-    def create(self, format: str) -> abstract_response:
-        if format not in self.__match.keys():
-            raise operation_exception("Формат не верный")
+    # Сопоставление форматов и классов-ответов
+    __match_responses = {
+        response_formats.csv(): response_scv,
+        response_formats.markdown(): responce_markdown,
+        response_formats.json(): responce_json,
+        response_formats.xml(): responce_xml
+    }
 
-        return self.__match[format]
+    """Метод получения экземпляра ответа"""
+    def create(self, format: Union[str, response_formats]) -> abstract_response:
+        validator.validate(format, (str, response_formats))
+        if isinstance(format, str):
+            format = format.lower().strip()
+            if format not in self.__match_formats:
+                raise Exception(
+                    f"Format '{format}' isn't supported. Available formats: "
+                    f"{self.__match_formats.keys()}"
+                )
+            format = self.__match_formats[format]
 
+        return self.__match_responses[format]()
+
+    """Получение экземпляра ответа по умолчанию (из настроек)"""
+    def create_default(self) -> abstract_response:
+        return self.create(settings_manager().settings.response_format)
