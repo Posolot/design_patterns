@@ -2,7 +2,7 @@ from typing import Union
 from Src.Core.validator import validator
 from Src.Core.responce_format import response_formats
 from Src.Core.abstract_responce import abstract_response
-from Src.Logics.responce_csv import response_scv
+from Src.Logics.responce_csv import responce_csv
 from Src.Logics.responce_xml import responce_xml
 from Src.Logics.responce_json import responce_json
 from Src.Logics.responce_markdown import responce_markdown
@@ -20,7 +20,7 @@ class facrtory_entities:
 
     # Сопоставление форматов и классов-ответов
     __match_responses = {
-        response_formats.csv(): response_scv,
+        response_formats.csv(): responce_csv,
         response_formats.markdown(): responce_markdown,
         response_formats.json(): responce_json,
         response_formats.xml(): responce_xml

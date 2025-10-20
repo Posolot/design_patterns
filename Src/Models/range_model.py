@@ -65,7 +65,7 @@ class range_model(abstract_model):
 
 
     @staticmethod
-    def create(name: str, base= None):
+    def create(name: str, base=None):
         validator.validate(name, str)
         inner_base = None
         if not base is None:

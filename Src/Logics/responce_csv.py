@@ -5,7 +5,7 @@ from Src.Core.responce_format import response_formats
 from Src.Core.abstract_responce import abstract_response
 from Src.Utils.handler_func import get_properties, obj_to_str
 
-class response_scv(abstract_response):
+class responce_csv(abstract_response):
     # Разделитель CSV
     delimitter: str = ","
 
