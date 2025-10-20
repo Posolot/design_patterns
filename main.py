@@ -43,14 +43,14 @@ async def get_response_models():
 # === Сформировать ответ для указанной модели и формата ===
 @app.get("/api/responses/build")
 async def build_response(
-    format: str = Query(..., description="Формат ответа (csv, json, excel, markdown)"),
-    model: str = Query(..., description="Имя модели для формирования ответа"),
+        format: str = Query(..., description="Формат ответа (csv, json, excel, markdown)"),
+        model: str = Query(..., description="Имя модели для формирования ответа"),
 ):
     """Сформировать ответ для моделей (model) в переданном формате (format)"""
     format = format.lower()
-    types = response_formats.answers_types()
-    available_formats = [t.lower() for t in dict.fromkeys(types)]
-    available_models = list(reposity.keys())
+
+    available_formats = [t.lower() for t in response_formats.answers_types()]
+    available_models = list(start_service._repo.keys())
 
     # Проверка формата
     if format not in available_formats:
@@ -71,7 +71,7 @@ async def build_response(
         )
 
     # Получение данных модели
-    models = start_service.repo.get_models(model)
+    models = start_service.get_models(model)
 
     # Формирование результата через фабрику
     result = factory.create(format).build(models)

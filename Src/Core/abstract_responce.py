@@ -5,14 +5,18 @@ from Src.Core.responce_format import response_formats
 # Абстрактный класс для фолрмирования ответов
 class abstract_response(ABC):
     @abstractmethod
-    def build(self, data: list, format: str) -> str:
-        """
-        data: список моделей
-        format: строка, одна из допустимых форматов (json, csv, markdown, xml)
-        """
-        validator.validate(format, str)
-        if format.lower() not in [f.lower() for f in response_formats.answers_types()]:
-            raise ValueError(f"Unsupported format: {format}")
+    def build(self, data: list, format: str | response_formats):
+        # Проверка формата
+        if isinstance(format, str):
+            format = format.lower()
+            if format not in [f.lower() for f in response_formats.answers_types()]:
+                raise ValueError(f"Unsupported format: {format}")
+        else:
+            validator.validate(format, response_formats)
 
-        # Проверяем, что data — список однотипных объектов
+        # Проверка данных
         validator.is_list_of_same(data, "list of models")
+
+        # Возвращаем **структуру**, а не строку
+        result = [item.to_dict() if hasattr(item, "to_dict") else item.__dict__ for item in data]
+        return result

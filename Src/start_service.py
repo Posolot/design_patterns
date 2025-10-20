@@ -40,7 +40,7 @@ class start_service:
         Возвращает список моделей по ключу в едином формате.
         Поддерживает как dict (ключ->model), так и list (список моделей).
         """
-        container = self._data.get(key, [])
+        container = self._repo.data.get(key, [])
         if isinstance(container, dict):
             return list(container.values())
         if isinstance(container, list):
