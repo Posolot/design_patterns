@@ -1,10 +1,10 @@
 from Src.Core.validator import validator
-from Src.Core.entity_model import entity_model
+from Src.Core.abstract_model import abstract_model
 from Src.Models.group_model import group_model
 from Src.Models.range_model import range_model
 
 
-class nomenclature_model(entity_model):
+class nomenclature_model(abstract_model):
     _full_name: str = ""
     _group: group_model = group_model()
     _range: range_model = range_model()

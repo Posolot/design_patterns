@@ -1,4 +1,4 @@
-from Src.Core.entity_model import entity_model
+from Src.Core.abstract_model import abstract_model
 from Src.Models.range_model import range_model
 from Src.Models.nomenclature_model import nomenclature_model
 from Src.Core.validator import validator, argument_exception
@@ -8,7 +8,7 @@ from Src.Core.validator import validator, argument_exception
 """
 
 
-class receipt_model(entity_model):
+class receipt_model(abstract_model):
     _number_of_servings: int = 1
     _ingredients: list[nomenclature_model] = []
     _steps: list[str] = []

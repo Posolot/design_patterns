@@ -3,12 +3,27 @@ import uuid
 from Src.Core.validator import validator
 
 
-class abstact_model(ABC):
+class abstract_model(ABC):
     __unique_code: str
+    __name: str = ""
 
-    def __init__(self) -> None:
+    def __init__(self, _name: str = "") -> None:
         super().__init__()
         self.__unique_code = uuid.uuid4().hex
+        if _name != "":
+            self.name = _name
+
+    """
+    Наименование
+    """
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        validator.validate(value, str, 50)
+        self.__name = value.strip()
 
     """
     Уникальный код
@@ -29,6 +44,6 @@ class abstact_model(ABC):
 
     def __eq__(self, value) -> bool:
         if value is None: return False
-        if not isinstance(value, abstact_model): return False
+        if not isinstance(value, abstract_model): return False
 
         return self.unique_code == value.unique_code

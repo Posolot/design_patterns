@@ -2,7 +2,7 @@
 Репозиторий данных
 """
 from Src.Models.receipt_model import receipt_model
-from Src.Core.entity_model import entity_model
+from Src.Core.abstract_model import abstract_model
 from Src.Core.validator import validator
 
 
@@ -35,8 +35,8 @@ class reposity:
     def range_key():
         return "range_model"
 
-    def append(self, key: str, value: entity_model):
-        validator.validate(value, entity_model)
+    def append(self, key: str, value: abstract_model):
+        validator.validate(value, abstract_model)
         validator.validate(key, str)
         if not key in self.data:
             self.data[key] = [value]
