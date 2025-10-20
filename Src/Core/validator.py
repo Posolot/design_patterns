@@ -24,7 +24,7 @@ class operation_exception(Exception):
 class validator:
 
     @staticmethod
-    def validate(value, type_, len_=None):
+    def validate(value, type_, len_=None,strong_check=False):
         """
             Валидация аргумента по типу и длине
         Args:
@@ -51,5 +51,7 @@ class validator:
             raise argument_exception("Пустой аргумент")
 
         if len_ is not None and len(str(value).strip()) > len_:
+            if strong_check and len(str(value).strip()) != len_:
+                raise argument_exception(f"Некорректная длина аргумента,длина должна быть равна {len_}")
             raise argument_exception("Некорректная длина аргумента")
         return True

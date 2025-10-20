@@ -1,9 +1,9 @@
 from Src.Models.company_model import company_model
 from Src.Core.validator import validator
-from Src.Core.abstract_model import abstact_model
+from Src.Core.entity_model import entity_model
 
 
-class Settings(abstact_model):
+class Settings(entity_model):
     _company: company_model = None
 
     @property
