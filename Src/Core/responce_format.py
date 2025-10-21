@@ -1,5 +1,6 @@
 # Форматы ответов
 import inspect
+
 class response_formats:
     @staticmethod
     def csv() -> str:

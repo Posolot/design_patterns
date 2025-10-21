@@ -1,0 +1,3 @@
+{'_abstract_model__unique_code': '5bfb5adae92c412eb23a0ebb074ecc0a', '_abstract_model__name': 'Товар 1', 'group': <Src.Models.group_model.group_model object at 0x000001CD94720620>, 'range': <Src.Models.range_model.range_model object at 0x000001CD946E86B0>}{'_abstract_model__unique_code': '94575eeb54a543d5bdf2db63270b9086', '_abstract_model__name': 'Товар 2', 'group': <Src.Models.group_model.group_model object at 0x000001CD94720620>, 'range': <Src.Models.range_model.range_model object at 0x000001CD946E86B0>}full_name,group,name,nomenclature_group,range,unique_code,unit_measure
+,Основная группа,Товар 1,,Штука,5bfb5adae92c412eb23a0ebb074ecc0a,
+,Основная группа,Товар 2,,Штука,94575eeb54a543d5bdf2db63270b9086,
