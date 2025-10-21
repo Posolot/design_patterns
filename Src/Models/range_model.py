@@ -1,11 +1,11 @@
-from Src.Core.entity_model import entity_model
+from Src.Core.abstract_model import abstract_model
 from Src.Core.validator import validator, argument_exception
 
 """
 Модель единицы измерения
 """
 
-class range_model(entity_model):
+class range_model(abstract_model):
     _value: int = 1
     _base: 'range_model' = None
 
@@ -65,7 +65,7 @@ class range_model(entity_model):
 
 
     @staticmethod
-    def create(name: str, base= None):
+    def create(name: str, base=None):
         validator.validate(name, str)
         inner_base = None
         if not base is None:

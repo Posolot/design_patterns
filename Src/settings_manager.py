@@ -9,8 +9,7 @@ from Src.Models.company_model import company_model
 class settings_manager:
     # Наименование файла (полный путь)
     _file_name: str = ""
-    # Настройки
-    _settings: Settings = None
+
 
     #singleton
     def __new__(cls, *args, **kwargs):

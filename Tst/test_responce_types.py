@@ -179,6 +179,20 @@ class TestResponseFactory(unittest.TestCase):
         self.assertEqual(parsed[0]["name"], "Штука")
         self.assertEqual(parsed[0]["value"], 1)
 
+    # ==== Проверка JSON для рецепта ====
+    def test_build_recipe_json_contains_recipe_data(self):
+        # Подготовка
+        instance = self.factory.create("json")
+        models = [self.recipe]
+
+        # Действие
+        result = instance.build(models)
+        if isinstance(result, list):
+            result = "".join(str(r) for r in result)
+        parsed = json.loads(result)
+
+        # Проверки
+        self.assertEqual(parsed[0]["name"], "Рецепт 1")
 
 
 if __name__ == "__main__":

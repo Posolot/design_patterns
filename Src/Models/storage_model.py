@@ -1,8 +1,8 @@
 from Src.Core.validator import validator
-from Src.Core.entity_model import entity_model
+from Src.Core.abstract_model import abstract_model
 
 
-class storage_model(entity_model):
+class storage_model(abstract_model):
     __address: str = ""
 
     """

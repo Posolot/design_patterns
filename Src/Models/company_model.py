@@ -1,9 +1,9 @@
 import json
 from Src.Core.validator import validator
-from Src.Core.entity_model import entity_model
+from Src.Core.abstract_model import abstract_model
 
 
-class company_model(entity_model):
+class company_model(abstract_model):
     _inn: int = 0
     _corr_account: int = 0
     _bik: int = 0
